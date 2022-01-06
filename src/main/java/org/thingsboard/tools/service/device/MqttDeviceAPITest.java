@@ -15,6 +15,7 @@
  */
 package org.thingsboard.tools.service.device;
 
+import com.alibaba.fastjson.JSONArray;
 import io.netty.util.concurrent.Future;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -22,6 +23,7 @@ import org.springframework.stereotype.Service;
 import org.thingsboard.mqtt.MqttClient;
 import org.thingsboard.server.common.data.Device;
 import org.thingsboard.server.common.data.id.IdBased;
+import org.thingsboard.tools.model.entity.TelemetryDo;
 import org.thingsboard.tools.service.mqtt.DeviceClient;
 import org.thingsboard.tools.service.shared.BaseMqttAPITest;
 
@@ -40,8 +42,6 @@ import java.util.stream.Collectors;
 @ConditionalOnProperty(prefix = "device", value = "api", havingValue = "MQTT")
 public class MqttDeviceAPITest extends BaseMqttAPITest implements DeviceAPITest {
 
-    static String dataAsStr = "{\"t1\":73}";
-    static byte[] data = dataAsStr.getBytes(StandardCharsets.UTF_8);
 
     @Override
     public void createDevices() throws Exception {
@@ -65,6 +65,15 @@ public class MqttDeviceAPITest extends BaseMqttAPITest implements DeviceAPITest 
 
     @Override
     protected byte[] getData(String deviceName) {
+        TelemetryDo telemetryDo = new TelemetryDo();
+        telemetryDo.setSn(deviceName);
+        telemetryDo.setTs(System.currentTimeMillis()/1000);
+        telemetryDo.setMo(mo);
+        telemetryDo.setRs(rs);
+        telemetryDo.setSi(si);
+        telemetryDo.setTe(te);
+        Object o = JSONArray.toJSON(telemetryDo);
+        byte[] data = o.toString().getBytes(StandardCharsets.UTF_8);
         return data;
     }
 

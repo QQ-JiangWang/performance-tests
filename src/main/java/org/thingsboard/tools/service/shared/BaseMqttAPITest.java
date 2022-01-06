@@ -161,7 +161,7 @@ public abstract class BaseMqttAPITest extends AbstractAPITest {
                     mqttClients.add(initClient(deviceName));
                     totalConnectedCount.incrementAndGet();
                 } catch (Exception e) {
-                    log.error("Error while connect {}", deviceType, e);
+                    log.error("Error while connect {}", deviceName, e);
                 } finally {
                     connectLatch.countDown();
                 }

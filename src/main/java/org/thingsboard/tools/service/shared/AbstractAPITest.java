@@ -81,7 +81,7 @@ public abstract class AbstractAPITest {
     protected boolean telemetryTest;
     @Value("${test.mps:1000}")
     protected int testMessagesPerSecond;
-    @Value("${test.duration:60}")
+    @Value("${test.duration:30}")
     protected int testDurationInSec;
     @Value("${test.alarms.start:0}")
     protected int alarmsStartTs;
@@ -93,6 +93,15 @@ public abstract class AbstractAPITest {
     protected int seed;
     @Value("${test.payloadType:SMART_METER}")
     protected String payloadType;
+
+    @Value("${test.mo}")
+    protected Integer mo;
+    @Value("${test.si}")
+    protected Integer si;
+    @Value("${test.rs}")
+    protected Integer rs;
+    @Value("${test.te}")
+    protected Integer te;
 
     @Autowired
     @Qualifier("randomTelemetryGenerator")
